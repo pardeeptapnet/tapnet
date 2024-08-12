@@ -7,8 +7,8 @@
         function redirectToReview() {
             const urlParams = new URLSearchParams(window.location.search);
             const reviewSite = urlParams.get('site');
-            const businessId = urlParams.get('business');
-            
+            const placeId = urlParams.get('business');  // Treat 'business' as the Place ID directly
+
             const reviewSitesMap = {
                 "google": "https://search.google.com/local/writereview?placeid=",
                 "yelp": "https://www.yelp.com/writeareview/biz/",
@@ -16,25 +16,13 @@
                 // Add more mappings as needed
             };
 
-            const placeIdMap = {
-                "business1": {
-                    "google": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "yelp": "yelp-business-id",
-                    "tripadvisor": "tripadvisor-business-id"
-                },
-                "business2": {
-                    "google": "ChIJa76xwh5ymkARkk8S5lQtcjY",
-                    "yelp": "another-yelp-business-id",
-                    "tripadvisor": "another-tripadvisor-business-id"
-                }
-                // Add more mappings as needed
-            };
-
-            if (reviewSitesMap[reviewSite] && placeIdMap[businessId]) {
-                const redirectUrl = reviewSitesMap[reviewSite] + placeIdMap[businessId][reviewSite];
+            if (reviewSitesMap[reviewSite] && placeId) {
+                const redirectUrl = reviewSitesMap[reviewSite] + placeId;
+                console.log("Redirecting to:", redirectUrl);
                 window.location.href = redirectUrl;
             } else {
                 document.body.innerHTML = "Invalid parameters.";
+                console.log("Invalid parameters.");
             }
         }
     </script>
