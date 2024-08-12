@@ -4,25 +4,27 @@
     <meta charset="UTF-8">
     <title>Review Redirect</title>
     <script type="text/javascript">
+        // Mapping of card identifiers to Google Place IDs (or other review page IDs)
+        const cardMap = {
+            "card1": "ChIJK1M5xKHy-a4R6P2rSDDxC1Y",  // Example Place ID for card1
+            "card2": "ChIJN1t_tDeuEmsRUsoyG83frY4",  // Example Place ID for card2
+            // Add more mappings here as needed
+        };
+
         function redirectToReview() {
             const urlParams = new URLSearchParams(window.location.search);
-            const reviewSite = urlParams.get('site');
-            const placeId = urlParams.get('business');  // Treat 'business' as the Place ID directly
+            const cardId = urlParams.get('card');  // Use 'card' as the identifier
 
-            const reviewSitesMap = {
-                "google": "https://search.google.com/local/writereview?placeid=",
-                "yelp": "https://www.yelp.com/writeareview/biz/",
-                "tripadvisor": "https://www.tripadvisor.com/UserReview-g"
-                // Add more mappings as needed
-            };
+            // Look up the Place ID based on the card ID
+            const placeId = cardMap[cardId];
 
-            if (reviewSitesMap[reviewSite] && placeId) {
-                const redirectUrl = reviewSitesMap[reviewSite] + placeId;
+            if (placeId) {
+                const redirectUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
                 console.log("Redirecting to:", redirectUrl);
                 window.location.href = redirectUrl;
             } else {
-                document.body.innerHTML = "Invalid parameters.";
-                console.log("Invalid parameters.");
+                document.body.innerHTML = "Invalid or missing card ID.";
+                console.log("Invalid or missing card ID.");
             }
         }
     </script>
