@@ -6,9 +6,10 @@
     <script type="text/javascript">
         function redirectToReview() {
             const urlParams = new URLSearchParams(window.location.search);
-            const reviewSite = urlParams.get('site');
-            const businessId = urlParams.get('business');
-            
+            const reviewSite = urlParams.get('site');  // e.g., "google"
+            const businessId = urlParams.get('business');  // e.g., "card1"
+
+            // Mapping review sites to their base URLs
             const reviewSitesMap = {
                 "google": "https://search.google.com/local/writereview?placeid=",
                 "yelp": "https://www.yelp.com/writeareview/biz/",
@@ -16,29 +17,32 @@
                 // Add more mappings as needed
             };
 
+            // Mapping card IDs to their corresponding Place IDs for each review site
             const placeIdMap = {
                 "card1": {
-                    "google": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "yelp": "yelp-business-id",
-                    "tripadvisor": "tripadvisor-business-id"
+                    "google": "ChIJPRQr-ZQhWksRjpC0fT99ml8",
+                    "yelp": "yelp-business-id-card1",
+                    "tripadvisor": "tripadvisor-business-id-card1"
                 },
                 "card2": {
                     "google": "ChIJa76xwh5ymkARkk8S5lQtcjY",
                     "yelp": "another-yelp-business-id",
                     "tripadvisor": "another-tripadvisor-business-id"
                 }
-                // Add more mappings as needed
+                // Add more mappings here as needed
             };
 
+            // Validate the parameters and redirect if valid
             if (reviewSitesMap[reviewSite] && placeIdMap[businessId]) {
                 const redirectUrl = reviewSitesMap[reviewSite] + placeIdMap[businessId][reviewSite];
                 window.location.href = redirectUrl;
             } else {
-                document.body.innerHTML = "Invalid parameters.";
+                document.body.innerHTML = "Invalid parameters. Please check your link.";
             }
         }
     </script>
 </head>
 <body onload="redirectToReview()">
+    <h1>Redirecting...</h1>
 </body>
 </html>
